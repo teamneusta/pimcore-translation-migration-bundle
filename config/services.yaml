@@ -1,0 +1,5 @@
+services:
+  Neusta\Pimcore\TranslationMigrationBundle\Command\TranslationsMigrateCommand:
+    arguments:
+      $translationFilePaths: []
+    tags: [ 'console.command' ]
