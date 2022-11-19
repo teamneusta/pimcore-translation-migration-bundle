@@ -13,26 +13,20 @@ final class NeustaPimcoreTranslationMigrationExtension extends ConfigurableExten
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-
         $loader->load('services.yaml');
-
-        $directories = $this->getTranslationFileDirectories($container);
 
         $container
             ->findDefinition(TranslationsMigrateCommand::class)
-            ->replaceArgument('$translationFilePaths', $directories);
+            ->replaceArgument('$translationFilePaths', $this->getTranslationFileDirectories($container));
     }
 
     private function getTranslationFileDirectories(ContainerBuilder $container): array
     {
-        // Add translation directory of bundles
         $directories = [];
-        $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
-        foreach ($bundlesMetadata as $bundleMetadata) {
-            if (
-                is_dir($dir = $bundleMetadata['path'] . '/Resources/translations')
-                || is_dir($dir = $bundleMetadata['path'] . '/translations')
-            ) {
+
+        // Add translation directories of bundles
+        foreach ($container->getParameter('kernel.bundles_metadata') as ['path' => $bundleDir]) {
+            if (is_dir($dir = $bundleDir . '/Resources/translations') || is_dir($dir = $bundleDir . '/translations')) {
                 $directories[] = $dir;
             }
         }
