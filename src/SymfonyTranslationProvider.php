@@ -21,10 +21,7 @@ final class SymfonyTranslationProvider
     ) {
     }
 
-    /**
-     * @return array<string, MessageCatalogue>
-     */
-    public function getTranslations(): array
+    public function getTranslations(string $domain): TranslationCollection
     {
         $resourcesByLocale = [];
         foreach ($this->resourceDirectories as $dir) {
@@ -41,25 +38,28 @@ final class SymfonyTranslationProvider
                 $fileNameParts = explode('.', $file->getBasename());
                 $format = array_pop($fileNameParts);
                 $locale = array_pop($fileNameParts);
-                $domain = implode('.', $fileNameParts);
-                $resourcesByLocale[$locale][] = [$format, $file, $domain];
+                $domain2 = implode('.', $fileNameParts);
+
+                if ($domain === $domain2) {
+                    $resourcesByLocale[$locale][] = [$format, $file, $domain2];
+                }
             }
         }
 
-        $cataloguesByLocale = [];
+        $collection = new TranslationCollection();
         foreach ($resourcesByLocale as $locale => $resources) {
-            $cataloguesByLocale[$locale] = new MessageCatalogue($locale);
-
             foreach ($resources as $resource) {
                 if (!$loader = $this->getLoader($resource[0])) {
                     throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $resource[0], $resource[1]));
                 }
 
-                $cataloguesByLocale[$locale]->addCatalogue($loader->load($resource[1], $locale, $resource[2]));
+                foreach ($loader->load($resource[1], $locale, $resource[2])->all($domain) as $id => $translation) {
+                    $collection->add($locale, $id, $translation);
+                }
             }
         }
 
-        return $cataloguesByLocale;
+        return $collection;
     }
 
     private function getLoader(string $format): ?LoaderInterface
