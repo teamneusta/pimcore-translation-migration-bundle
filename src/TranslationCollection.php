@@ -2,9 +2,7 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle;
 
-use Traversable;
-
-final class TranslationCollection implements \IteratorAggregate
+final class TranslationCollection implements \IteratorAggregate, \Countable
 {
     /** @var array<string, array<string, string>>  [id => [locale => translation[]]] */
     private array $translations;
@@ -25,5 +23,10 @@ final class TranslationCollection implements \IteratorAggregate
     public function getIterator(): \Generator
     {
         yield from $this->translations;
+    }
+
+    public function count(): int
+    {
+        return count($this->translations);
     }
 }

@@ -5,7 +5,6 @@ namespace Neusta\Pimcore\TranslationMigrationBundle;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\LoaderInterface;
-use Symfony\Component\Translation\MessageCatalogue;
 
 final class SymfonyTranslationProvider
 {
