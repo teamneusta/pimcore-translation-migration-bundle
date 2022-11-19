@@ -43,9 +43,10 @@ Please remember to create an issue before creating large pull requests.
 ### Running tests for development
 
 ```shell
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer install --ignore-platform-reqs
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer test
+./run-tests.sh
 ```
+
+Only supported on Linux.
 
 ### Further development
 
@@ -55,5 +56,8 @@ Pipelines will tell you, when code does not meet our standards. To use the same 
 * phpstan
 
 ```shell
+docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer install --ignore-platform-reqs
 docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer <composer-script>
 ```
+
+Only supported on Linux.
