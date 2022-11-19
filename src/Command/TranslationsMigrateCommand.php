@@ -6,6 +6,7 @@ use Neusta\Pimcore\TranslationMigrationBundle\Service\ArrayTransformationService
 use Pimcore\Console\AbstractCommand;
 use Pimcore\Model\Translation;
 use Pimcore\Model\User;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,10 +14,12 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Yaml\Yaml;
 
+#[AsCommand(
+    name: 'neusta:translations:migrate',
+    description: 'Creates Pimcore translations for every YAML translation file.',
+)]
 final class TranslationsMigrateCommand extends AbstractCommand
 {
-    protected static $defaultName = 'neusta:translations:migrate';
-    protected static $defaultDescription = 'Creates Pimcore translations for every YAML translation file.';
     private array $editableLanguages = [];
 
     /**
