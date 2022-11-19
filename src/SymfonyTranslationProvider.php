@@ -3,8 +3,8 @@
 namespace Neusta\Pimcore\TranslationMigrationBundle;
 
 use Psr\Container\ContainerInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Translation\Loader\LoaderInterface;
+use Symfony\Component\Translation\MessageCatalogue;
 
 final class SymfonyTranslationProvider
 {
@@ -16,6 +16,7 @@ final class SymfonyTranslationProvider
     public function __construct(
         private ContainerInterface $loaderLocator,
         private array $loaderIds,
+        private SymfonyTranslationFinder $finder,
         private array $resourceDirectories,
     ) {
     }
@@ -30,44 +31,34 @@ final class SymfonyTranslationProvider
 
     public function getTranslations(string $domain): TranslationCollection
     {
-        $resourcesByLocale = [];
-        foreach ($this->resourceDirectories as $dir) {
-            $finder = Finder::create()
-                ->followLinks()
-                ->files()
-                ->filter(function (\SplFileInfo $file) {
-                    return 2 <= substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
-                })
-                ->in($dir)
-                ->sortByName();
-            foreach ($finder as $file) {
-                // filename is domain.locale.format
-                $fileNameParts = explode('.', $file->getBasename());
-                $format = array_pop($fileNameParts);
-                $locale = array_pop($fileNameParts);
-                $domain2 = implode('.', $fileNameParts);
+        $collection = new TranslationCollection();
 
-                if ($domain === $domain2) {
-                    $resourcesByLocale[$locale][] = [$format, $file, $domain2];
-                }
-            }
-        }
-
-        $collection = new TranslationCollection;
-        foreach ($resourcesByLocale as $locale => $resources) {
-            foreach ($resources as $resource) {
-                if (! $loader = $this->getLoader($resource[0])) {
-                    throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.',
-                        $resource[0], $resource[1]));
+        foreach ($this->resourceDirectories as $directory) {
+            foreach ($this->finder->find($directory) as $file) {
+                if ($domain !== $file->domain()) {
+                    continue;
                 }
 
-                foreach ($loader->load($resource[1], $locale, $resource[2])->all($domain) as $id => $translation) {
-                    $collection->add($locale, $id, $translation);
+                foreach ($this->load($file)->all($domain) as $id => $translation) {
+                    $collection->add($file->locale(), $id, $translation);
                 }
             }
         }
 
         return $collection;
+    }
+
+    private function load(TranslationFileInfo $file): MessageCatalogue
+    {
+        if (! $loader = $this->getLoader($file->format())) {
+            throw new \RuntimeException(sprintf(
+                'No loader is registered for the "%s" format when loading the "%s" resource.',
+                $file->format(),
+                $file->file(),
+            ));
+        }
+
+        return $loader->load($file->file(), $file->locale(), $file->domain());
     }
 
     private function getLoader(string $format): ?LoaderInterface
