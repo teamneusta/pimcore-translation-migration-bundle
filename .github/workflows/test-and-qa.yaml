@@ -44,6 +44,8 @@ jobs:
 
   container-test-job:
     runs-on: ubuntu-latest
+    container: ubuntu
+    # from https://ldarren.medium.com/number-of-ways-to-setup-database-in-github-actions-2cd48df9faae
     services:
       db:
         image: mariadb:10.10.2
