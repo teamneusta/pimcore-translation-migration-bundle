@@ -1,5 +1,5 @@
 
- // Start migrating YAML translations to Pimcore translations                   
+ // Start migrating YAML translations to Pimcore translations                                                           
 
 Read from directories:
  * tests/translation-fixtures
@@ -14,7 +14,7 @@ Found 1 translation keys in translation files
 
 Loading Pimcore translations from database
 Found 0 Pimcore translation keys in database
- [INFO] 1 translation keys were added to Pimcore.                               
+ [INFO] 1 translation keys were added to Pimcore.                                                                       
 
- [OK] Pimcore translations updated successfully                                 
+ [OK] Pimcore translations updated successfully                                                                         
 

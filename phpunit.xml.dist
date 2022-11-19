@@ -17,7 +17,7 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <ini name="memory_limit" value="-1" />
-        <server name="DB_URL" value="mysql://pimcore:pimcore@db:3306/pimcore_test?serverVersion=mariadb-10.5.13"/>
+        <server name="DB_URL" value="mysql://pimcore:pimcore@db:3306/pimcore_test?serverVersion=mariadb-10.10.2"/>
     </php>
 
     <testsuites>
