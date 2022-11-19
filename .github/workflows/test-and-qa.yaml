@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  TestAndQaJobs:
+  qa:
     runs-on: ubuntu-latest
     steps:
       - uses: shivammathur/setup-php@v2
@@ -44,7 +44,6 @@ jobs:
 
   container-test-job:
     runs-on: ubuntu-latest
-#    container: ubuntu
     # from https://ldarren.medium.com/number-of-ways-to-setup-database-in-github-actions-2cd48df9faae
     services:
       db:
@@ -59,11 +58,6 @@ jobs:
           - 3306:3306
 
     steps:
-      - name: Verify MySQL connection from host
-        run: |
-          sudo apt-get install -y mysql-client
-          mysql --host 127.0.0.1 --port 3306 -upimcore -ppimcore -e "SHOW DATABASES"
-
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
