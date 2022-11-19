@@ -81,5 +81,5 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: composer tests
         env:
-          DB_URL: 'mysql://pimcore:pimcore@localhost:3306/pimcore_test?serverVersion=mariadb-10.10.2'
+          DB_URL: 'mysql://pimcore:pimcore@127.0.0.1:3306/pimcore_test?serverVersion=mariadb-10.10.2'
 
