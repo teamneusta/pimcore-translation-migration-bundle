@@ -11,13 +11,21 @@ final class SymfonyTranslationProvider
     /**
      * @param ContainerInterface          $loaderLocator
      * @param array<string, list<string>> $loaderIds
-     * @param array<string, string>       $resourceDirectories
+     * @param list<string>                $resourceDirectories
      */
     public function __construct(
         private ContainerInterface $loaderLocator,
         private array $loaderIds,
         private array $resourceDirectories,
     ) {
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function getDirectories(): array
+    {
+        return $this->resourceDirectories;
     }
 
     public function getTranslations(string $domain): TranslationCollection
@@ -45,11 +53,12 @@ final class SymfonyTranslationProvider
             }
         }
 
-        $collection = new TranslationCollection();
+        $collection = new TranslationCollection;
         foreach ($resourcesByLocale as $locale => $resources) {
             foreach ($resources as $resource) {
-                if (!$loader = $this->getLoader($resource[0])) {
-                    throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $resource[0], $resource[1]));
+                if (! $loader = $this->getLoader($resource[0])) {
+                    throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.',
+                        $resource[0], $resource[1]));
                 }
 
                 foreach ($loader->load($resource[1], $locale, $resource[2])->all($domain) as $id => $translation) {

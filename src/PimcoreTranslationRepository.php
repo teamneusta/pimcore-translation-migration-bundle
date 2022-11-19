@@ -6,6 +6,11 @@ use Pimcore\Model\Translation;
 
 final class PimcoreTranslationRepository
 {
+    public function count(): int
+    {
+        return (new Translation\Listing())->getTotalCount();
+    }
+
     /**
      * @return string[]
      */
