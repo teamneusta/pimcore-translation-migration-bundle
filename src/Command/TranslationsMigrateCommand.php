@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'neusta:translations:migrate',
-    description: 'Creates Pimcore translations for every translation file.',
+    description: 'Creates Pimcore translations for every Symfony translation file.',
 )]
 final class TranslationsMigrateCommand extends AbstractCommand
 {
@@ -38,9 +38,6 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
               <info>php %command.full_name%</info>
               <info>php %command.full_name% -v</info>
-
-            By default, this command uses YAML translation files from %kernel.project_dir%/translations.
-            This can be changed via Symfony service definitions (services.yaml).
             EOF
         );
     }
