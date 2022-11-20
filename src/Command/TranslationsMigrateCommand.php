@@ -12,10 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 #[AsCommand(
     name: 'neusta:translations:migrate',
-    description: 'Creates Pimcore translations for every YAML translation file.',
+    description: 'Creates Pimcore translations for every translation file.',
 )]
 final class TranslationsMigrateCommand extends AbstractCommand
 {
+    private const DOMAIN = 'messages';
+    private const PROJECT_ROOT = PIMCORE_PROJECT_ROOT . '/';
+
     public function __construct(
         private SymfonyTranslationProvider $translationProvider,
         private PimcoreTranslationRepository $translationRepository,
@@ -44,7 +47,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->io->comment('Start migrating YAML translations to Pimcore translations');
+        $this->io->comment('Start migrating translations to Pimcore translations');
 
         if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
             $output->writeln('Reading from directories:');
@@ -54,7 +57,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
             ));
         }
 
-        $collection = $this->translationProvider->getTranslations('messages');
+        $collection = $this->translationProvider->getTranslations(self::DOMAIN);
 
         if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
             $output->writeln(sprintf('Found %s translation keys in translation files', \count($collection)));
@@ -65,7 +68,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
         $collection = $collection->without(...$this->translationRepository->getModifiedIds());
         $this->translationRepository->save($collection);
 
-        $this->io->info(\count($collection) . ' translation keys were added to Pimcore.');
+        $this->io->info(sprintf("%s translation keys were added to Pimcore.", \count($collection)));
         $this->io->success('Pimcore translations updated successfully');
 
         return Command::SUCCESS;
@@ -73,10 +76,8 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
     private function stripProjectPrefix(string $string): string
     {
-        $prefix = PIMCORE_PROJECT_ROOT . '/';
-
-        return str_starts_with($string, $prefix)
-            ? substr($string, strlen($prefix))
+        return str_starts_with($string, self::PROJECT_ROOT)
+            ? substr($string, strlen(self::PROJECT_ROOT))
             : $string;
     }
 }
