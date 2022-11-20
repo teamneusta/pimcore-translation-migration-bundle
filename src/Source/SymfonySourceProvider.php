@@ -1,12 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Source;
 
+use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationCollection;
+use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationFileInfo;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\MessageCatalogue;
 
-final class SymfonyTranslationProvider
+final class SymfonySourceProvider implements SourceProvider
 {
     /**
      * @param array<string, list<string>> $loaderIds
@@ -15,7 +17,7 @@ final class SymfonyTranslationProvider
     public function __construct(
         private ContainerInterface $loaderLocator,
         private array $loaderIds,
-        private SymfonyTranslationFinder $finder,
+        private SourceFinder $finder,
         private array $resourceDirectories,
     ) {
     }
@@ -52,11 +54,7 @@ final class SymfonyTranslationProvider
     private function load(TranslationFileInfo $file): MessageCatalogue
     {
         if (!$loader = $this->getLoader($file->format())) {
-            throw new \RuntimeException(sprintf(
-                'No loader is registered for the "%s" format when loading the "%s" resource.',
-                $file->format(),
-                $file->file(),
-            ));
+            throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $file->format(), $file->file()));
         }
 
         return $loader->load($file->file(), $file->locale(), $file->domain());

@@ -1,10 +1,13 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Model;
 
+/**
+ * @template-implements \IteratorAggregate<string, array<string, string>>
+ */
 final class TranslationCollection implements \IteratorAggregate, \Countable
 {
-    /** @var array<string, array<string, string>>  [id => [locale => translation[]]] */
+    /** @var array<string, array<string, string>> */
     private array $translations = [];
 
     public function add(string $locale, string $id, string $translation): void

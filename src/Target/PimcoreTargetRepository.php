@@ -1,19 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Target;
 
+use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationCollection;
 use Pimcore\Model\Translation;
 
-final class PimcoreTranslationRepository
+final class PimcoreTargetRepository implements TargetRepository
 {
     public function count(): int
     {
         return (new Translation\Listing())->getTotalCount();
     }
 
-    /**
-     * @return string[]
-     */
     public function getModifiedIds(): array
     {
         $translationIds = [];

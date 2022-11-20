@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Model;
 
 final class TranslationFileInfo
 {

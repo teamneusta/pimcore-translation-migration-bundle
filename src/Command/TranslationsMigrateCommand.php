@@ -2,8 +2,8 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle\Command;
 
-use Neusta\Pimcore\TranslationMigrationBundle\PimcoreTranslationRepository;
-use Neusta\Pimcore\TranslationMigrationBundle\SymfonyTranslationProvider;
+use Neusta\Pimcore\TranslationMigrationBundle\Target\TargetRepository;
+use Neusta\Pimcore\TranslationMigrationBundle\Source\SourceProvider;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -20,8 +20,8 @@ final class TranslationsMigrateCommand extends AbstractCommand
     private const PROJECT_ROOT = PIMCORE_PROJECT_ROOT . '/';
 
     public function __construct(
-        private SymfonyTranslationProvider $translationProvider,
-        private PimcoreTranslationRepository $translationRepository,
+        private SourceProvider $sourceProvider,
+        private TargetRepository $targetRepository,
     ) {
         parent::__construct();
     }
@@ -53,20 +53,20 @@ final class TranslationsMigrateCommand extends AbstractCommand
             $output->writeln('Reading from directories:');
             $this->io->listing(\array_map(
                 fn (string $path): string => $this->stripProjectPrefix($path),
-                $this->translationProvider->getDirectories(),
+                $this->sourceProvider->getDirectories(),
             ));
         }
 
-        $collection = $this->translationProvider->getTranslations(self::DOMAIN);
+        $collection = $this->sourceProvider->getTranslations(self::DOMAIN);
 
         if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
             $output->writeln(sprintf('Found %s translation keys in translation files', \count($collection)));
             $output->writeln('');
-            $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->translationRepository->count()));
+            $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
         }
 
-        $collection = $collection->without(...$this->translationRepository->getModifiedIds());
-        $this->translationRepository->save($collection);
+        $collection = $collection->without(...$this->targetRepository->getModifiedIds());
+        $this->targetRepository->save($collection);
 
         $this->io->info(sprintf('%s translation keys were added to Pimcore.', \count($collection)));
         $this->io->success('Pimcore translations updated successfully');

@@ -1,14 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Source;
 
+use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationFileInfo;
 use Symfony\Component\Finder\Finder;
 
-final class SymfonyTranslationFinder implements \IteratorAggregate
+final class SymfonySourceFinder implements SourceFinder
 {
     private ?Finder $finder = null;
 
-    public function find(string $directory): self
+    public function find(string $directory): static
     {
         $this->finder = Finder::create()
             ->followLinks()
@@ -22,9 +23,6 @@ final class SymfonyTranslationFinder implements \IteratorAggregate
         return $this;
     }
 
-    /**
-     * @return \Generator<TranslationFileInfo>
-     */
     public function getIterator(): \Generator
     {
         if ($this->finder) {
