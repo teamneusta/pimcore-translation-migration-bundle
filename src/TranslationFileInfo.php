@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Neusta\Pimcore\TranslationMigrationBundle;
 
@@ -23,7 +23,7 @@ final class TranslationFileInfo
         return new self($fileInfo, $format, $locale, $domain);
     }
 
-    public function file(): string
+    public function file(): \SplFileInfo
     {
         return $this->file;
     }

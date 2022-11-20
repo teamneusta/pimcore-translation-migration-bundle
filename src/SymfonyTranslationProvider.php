@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Neusta\Pimcore\TranslationMigrationBundle;
 
@@ -9,7 +9,6 @@ use Symfony\Component\Translation\MessageCatalogue;
 final class SymfonyTranslationProvider
 {
     /**
-     * @param ContainerInterface          $loaderLocator
      * @param array<string, list<string>> $loaderIds
      * @param list<string>                $resourceDirectories
      */
@@ -39,6 +38,8 @@ final class SymfonyTranslationProvider
                     continue;
                 }
 
+                // check for "kernel.enabled_locales"
+
                 foreach ($this->load($file)->all($domain) as $id => $translation) {
                     $collection->add($file->locale(), $id, $translation);
                 }
@@ -50,7 +51,7 @@ final class SymfonyTranslationProvider
 
     private function load(TranslationFileInfo $file): MessageCatalogue
     {
-        if (! $loader = $this->getLoader($file->format())) {
+        if (!$loader = $this->getLoader($file->format())) {
             throw new \RuntimeException(sprintf(
                 'No loader is registered for the "%s" format when loading the "%s" resource.',
                 $file->format(),
