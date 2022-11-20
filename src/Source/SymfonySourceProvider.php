@@ -4,22 +4,26 @@ namespace Neusta\Pimcore\TranslationMigrationBundle\Source;
 
 use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationCollection;
 use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationFileInfo;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\MessageCatalogue;
 
 final class SymfonySourceProvider implements SourceProvider
 {
+    /** @var array<string, LoaderInterface> */
+    private array $loaders = [];
+
     /**
-     * @param array<string, list<string>> $loaderIds
-     * @param list<string>                $resourceDirectories
+     * @param list<string> $resourceDirectories
      */
     public function __construct(
-        private ContainerInterface $loaderLocator,
-        private array $loaderIds,
         private SourceFinder $finder,
         private array $resourceDirectories,
     ) {
+    }
+
+    public function addLoader(string $format, LoaderInterface $loader): void
+    {
+        $this->loaders[$format] = $loader;
     }
 
     /**
@@ -53,21 +57,10 @@ final class SymfonySourceProvider implements SourceProvider
 
     private function load(TranslationFileInfo $file): MessageCatalogue
     {
-        if (!$loader = $this->getLoader($file->format())) {
+        if (!$loader = $this->loaders[$file->format()] ?? null) {
             throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $file->format(), $file->file()));
         }
 
         return $loader->load($file->file(), $file->locale(), $file->domain());
-    }
-
-    private function getLoader(string $format): ?LoaderInterface
-    {
-        foreach ($this->loaderIds as $id => $aliases) {
-            if (in_array($format, $aliases, true) && $this->loaderLocator->has($id)) {
-                return $this->loaderLocator->get($id);
-            }
-        }
-
-        return null;
     }
 }
