@@ -44,23 +44,18 @@ final class SymfonySourceProvider implements SourceProvider
                     continue;
                 }
 
+                if (!$loader = $this->loaders[$file->format()] ?? null) {
+                    continue;
+                }
+
                 // check for "kernel.enabled_locales"
 
-                foreach ($this->load($file)->all($domain) as $id => $translation) {
+                foreach ($loader->load($file, $file->locale(), $file->domain())->all($domain) as $id => $translation) {
                     $collection->add($file->locale(), $id, $translation);
                 }
             }
         }
 
         return $collection;
-    }
-
-    private function load(TranslationFileInfo $file): MessageCatalogue
-    {
-        if (!$loader = $this->loaders[$file->format()] ?? null) {
-            throw new \RuntimeException(sprintf('No loader is registered for the "%s" format when loading the "%s" resource.', $file->format(), $file->file()));
-        }
-
-        return $loader->load($file->file(), $file->locale(), $file->domain());
     }
 }
