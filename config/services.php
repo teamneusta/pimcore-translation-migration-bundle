@@ -19,6 +19,7 @@ return static function (ContainerConfigurator $container) {
             ->args([
                 service(SourceFinder::class),
                 [], // Resource directories
+                param('kernel.enabled_locales'),
             ])
         ->alias(SourceProvider::class, SymfonySourceProvider::class)
 

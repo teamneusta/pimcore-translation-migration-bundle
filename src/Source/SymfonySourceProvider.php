@@ -3,9 +3,7 @@
 namespace Neusta\Pimcore\TranslationMigrationBundle\Source;
 
 use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationCollection;
-use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationFileInfo;
 use Symfony\Component\Translation\Loader\LoaderInterface;
-use Symfony\Component\Translation\MessageCatalogue;
 
 final class SymfonySourceProvider implements SourceProvider
 {
@@ -13,11 +11,13 @@ final class SymfonySourceProvider implements SourceProvider
     private array $loaders = [];
 
     /**
-     * @param list<string> $resourceDirectories
+     * @param list<string>  $resourceDirectories
+     * @param array<string> $enabledLocales
      */
     public function __construct(
         private SourceFinder $finder,
         private array $resourceDirectories,
+        private array $enabledLocales,
     ) {
     }
 
@@ -40,15 +40,17 @@ final class SymfonySourceProvider implements SourceProvider
 
         foreach ($this->resourceDirectories as $directory) {
             foreach ($this->finder->find($directory) as $file) {
-                if ($domain !== $file->domain()) {
+                if ($file->domain() !== $domain) {
+                    continue;
+                }
+
+                if (!in_array($file->locale(), $this->enabledLocales, true)) {
                     continue;
                 }
 
                 if (!$loader = $this->loaders[$file->format()] ?? null) {
                     continue;
                 }
-
-                // check for "kernel.enabled_locales"
 
                 foreach ($loader->load($file, $file->locale(), $file->domain())->all($domain) as $id => $translation) {
                     $collection->add($file->locale(), $id, $translation);
