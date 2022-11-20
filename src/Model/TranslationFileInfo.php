@@ -4,7 +4,7 @@ namespace Neusta\Pimcore\TranslationMigrationBundle\Model;
 
 final class TranslationFileInfo implements \Stringable
 {
-    private function __construct(
+    public function __construct(
         private \SplFileInfo $file,
         private string $format,
         private string $locale,
