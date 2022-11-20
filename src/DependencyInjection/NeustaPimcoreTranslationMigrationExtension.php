@@ -3,6 +3,7 @@
 namespace Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection;
 
 use Neusta\Pimcore\TranslationMigrationBundle\Command\TranslationsMigrateCommand;
+use Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -16,8 +17,8 @@ final class NeustaPimcoreTranslationMigrationExtension extends ConfigurableExten
         $loader->load('services.yaml');
 
         $container
-            ->findDefinition(TranslationsMigrateCommand::class)
-            ->replaceArgument('$translationFilePaths', $this->getTranslationFileDirectories($container));
+            ->findDefinition(SymfonySourceProvider::class)
+            ->replaceArgument('$resourceDirectories', $this->getTranslationFileDirectories($container));
     }
 
     private function getTranslationFileDirectories(ContainerBuilder $container): array

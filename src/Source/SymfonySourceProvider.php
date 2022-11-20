@@ -16,8 +16,8 @@ final class SymfonySourceProvider implements SourceProvider
      * @param list<string> $resourceDirectories
      */
     public function __construct(
-        private SourceFinder $finder,
         private array $resourceDirectories,
+        private SourceFinder $finder,
     ) {
     }
 
