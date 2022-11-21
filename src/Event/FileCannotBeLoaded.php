@@ -8,7 +8,7 @@ final class FileCannotBeLoaded
 {
     public function __construct(
         public TranslationFileInfo $file,
-        public \Exception $exception,
+        public \Throwable $exception,
     ) {
     }
 }
