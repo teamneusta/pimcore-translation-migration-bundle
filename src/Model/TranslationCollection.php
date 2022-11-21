@@ -32,7 +32,12 @@ final class TranslationCollection implements \IteratorAggregate, \Countable
     public function withoutIds(string ...$ids): self
     {
         $clone = clone $this;
-        $clone->translations = array_filter($this->translations, static fn (string $id) => !in_array($id, $ids, true));
+
+        $clone->translations = array_filter(
+            $this->translations,
+            static fn (string $id): bool => !in_array($id, $ids, true),
+            ARRAY_FILTER_USE_KEY,
+        );
 
         return $clone;
     }
