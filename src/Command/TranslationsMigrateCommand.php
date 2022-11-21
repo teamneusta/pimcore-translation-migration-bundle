@@ -62,7 +62,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
             $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
         }
 
-        $collection = $collection->without(...$this->targetRepository->getModifiedIds());
+        $collection = $collection->withoutIds(...$this->targetRepository->getModifiedIds());
         $this->targetRepository->save($collection);
 
         $this->io->info(sprintf('%s translation keys were added to Pimcore.', \count($collection)));

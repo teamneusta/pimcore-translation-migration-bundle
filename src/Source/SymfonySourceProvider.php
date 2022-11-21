@@ -36,7 +36,7 @@ final class SymfonySourceProvider implements SourceProvider
 
     public function getTranslations(string $domain): TranslationCollection
     {
-        $collection = new TranslationCollection();
+        $collection = new TranslationCollection($domain);
 
         foreach ($this->resourceDirectories as $directory) {
             foreach ($this->finder->find($directory) as $file) {
@@ -52,9 +52,7 @@ final class SymfonySourceProvider implements SourceProvider
                     continue;
                 }
 
-                foreach ($loader->load($file, $file->locale(), $file->domain())->all($domain) as $id => $translation) {
-                    $collection->add($file->locale(), $id, $translation);
-                }
+                $collection = $collection->withCatalogue($loader->load($file, $file->locale(), $file->domain()));
             }
         }
 

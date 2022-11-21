@@ -2,6 +2,8 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle\Model;
 
+use Symfony\Component\Translation\MessageCatalogue;
+
 /**
  * @template-implements \IteratorAggregate<string, array<string, string>>
  */
@@ -10,17 +12,29 @@ final class TranslationCollection implements \IteratorAggregate, \Countable
     /** @var array<string, array<string, string>> */
     private array $translations = [];
 
-    public function add(string $locale, string $id, string $translation): void
-    {
-        $this->translations[$id][$locale] = $translation;
+    public function __construct(
+        private string $domain,
+    ) {
     }
 
-    public function without(string ...$ids): self
+    public function withCatalogue(MessageCatalogue $catalogue): self
     {
-        $new = new self();
-        $new->translations = array_filter($this->translations, static fn (string $id) => !in_array($id, $ids, true));
+        $locale = $catalogue->getLocale();
+        $clone = clone $this;
 
-        return $new;
+        foreach ($catalogue->all($this->domain) as $id => $translation) {
+            $clone->translations[$id][$locale] = $translation;
+        }
+
+        return $clone;
+    }
+
+    public function withoutIds(string ...$ids): self
+    {
+        $clone = clone $this;
+        $clone->translations = array_filter($this->translations, static fn (string $id) => !in_array($id, $ids, true));
+
+        return $clone;
     }
 
     public function getIterator(): \Generator
