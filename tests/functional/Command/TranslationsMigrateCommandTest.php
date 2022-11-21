@@ -50,7 +50,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesTextSnapshot($this->commandTester->getDisplay());
+        $this->assertMatchesSnapshotCommandDisplay();
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
@@ -63,7 +63,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesTextSnapshot($this->commandTester->getDisplay());
+        $this->assertMatchesSnapshotCommandDisplay();
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
@@ -85,7 +85,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesTextSnapshot($this->commandTester->getDisplay());
+        $this->assertMatchesSnapshotCommandDisplay();
         $this->assertTranslationIsSame(['en' => 'Modified translation value'], 'test.translation.key');
     }
 
@@ -112,5 +112,12 @@ class TranslationsMigrateCommandTest extends KernelTestCase
     {
         RuntimeCache::clear();
         self::assertSame($expected, Translation::getByKey($key)?->getTranslations());
+    }
+
+    private function assertMatchesSnapshotCommandDisplay(): void
+    {
+        $displayOutput = $this->commandTester->getDisplay();
+        $displayOutput = preg_replace("/\s+\n/", "\n", $displayOutput);
+        $this->assertMatchesTextSnapshot($displayOutput);
     }
 }

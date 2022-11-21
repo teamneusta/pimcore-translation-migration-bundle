@@ -38,7 +38,10 @@
     "psr-4": {
       "Neusta\\Pimcore\\TranslationMigrationBundle\\Tests\\Functional\\": "tests/functional/",
       "Neusta\\Pimcore\\TranslationMigrationBundle\\Tests\\Unit\\": "tests/unit/"
-    }
+    },
+    "classmap": [
+      "tests/app/TestKernel.php"
+    ]
   },
   "scripts": {
     "cs:check": "php-cs-fixer fix -v --diff --dry-run",
