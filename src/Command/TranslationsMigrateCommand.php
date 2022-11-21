@@ -54,18 +54,18 @@ final class TranslationsMigrateCommand extends AbstractCommand
             ));
         }
 
-        $collection = $this->sourceProvider->getTranslations(self::DOMAIN);
+        $translations = $this->sourceProvider->getTranslations(self::DOMAIN);
 
         if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
-            $output->writeln(sprintf('Found %s translation keys in translation files', \count($collection)));
+            $output->writeln(sprintf('Found %s translation keys in translation files', \count($translations)));
             $output->writeln('');
             $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
         }
 
-        $collection = $collection->withoutIds(...$this->targetRepository->getModifiedIds());
-        $this->targetRepository->save($collection);
+        $translationsToUpdate = $translations->withoutIds(...$this->targetRepository->getModifiedIds());
+        $this->targetRepository->save($translationsToUpdate);
 
-        $this->io->info(sprintf('%s translation keys were added to Pimcore.', \count($collection)));
+        $this->io->info(sprintf('%s translation keys were added to Pimcore.', \count($translationsToUpdate)));
         $this->io->success('Pimcore translations updated successfully');
 
         return Command::SUCCESS;
