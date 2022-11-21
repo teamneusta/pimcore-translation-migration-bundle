@@ -17,7 +17,7 @@ final class NeustaPimcoreTranslationMigrationExtension extends ConfigurableExten
 
         $container
             ->findDefinition(SymfonySourceProvider::class)
-            ->replaceArgument('$resourceDirectories', $this->getTranslationFileDirectories($container));
+            ->replaceArgument(2, $this->getTranslationFileDirectories($container));
     }
 
     private function getTranslationFileDirectories(ContainerBuilder $container): array

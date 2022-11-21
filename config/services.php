@@ -17,6 +17,7 @@ return static function (ContainerConfigurator $container) {
 
         ->set(SymfonySourceProvider::class, SymfonySourceProvider::class)
             ->args([
+                service('event_dispatcher'),
                 service(SourceFinder::class),
                 [], // Resource directories
                 param('kernel.enabled_locales'),
