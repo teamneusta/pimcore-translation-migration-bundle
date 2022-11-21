@@ -14,8 +14,12 @@ final class TranslationFileInfo implements \Stringable
 
     public static function fromSplFileInfo(\SplFileInfo $fileInfo): self
     {
-        // filename is domain.locale.format
         $fileNameParts = explode('.', $fileInfo->getBasename());
+
+        if (count($fileNameParts) < 3) {
+            throw new \InvalidArgumentException('Unsupported file name. The scheme must be as follows: "domain.locale.format"');
+        }
+
         $format = array_pop($fileNameParts);
         $locale = array_pop($fileNameParts);
         $domain = implode('.', $fileNameParts);
