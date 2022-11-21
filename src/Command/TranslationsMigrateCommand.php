@@ -2,13 +2,16 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle\Command;
 
-use Neusta\Pimcore\TranslationMigrationBundle\Target\TargetRepository;
+use Neusta\Pimcore\TranslationMigrationBundle\Event\FileCannotBeLoaded;
+use Neusta\Pimcore\TranslationMigrationBundle\Event\FileWasLoaded;
 use Neusta\Pimcore\TranslationMigrationBundle\Source\SourceProvider;
+use Neusta\Pimcore\TranslationMigrationBundle\Target\TargetRepository;
 use Pimcore\Console\AbstractCommand;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 #[AsCommand(
     name: 'neusta:translations:migrate',
@@ -22,6 +25,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
     public function __construct(
         private SourceProvider $sourceProvider,
         private TargetRepository $targetRepository,
+        private EventDispatcherInterface $eventDispatcher,
     ) {
         parent::__construct();
     }
@@ -44,21 +48,45 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $isVerbose = OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity();
+
         $this->io->comment('Start migrating translations to Pimcore translations');
 
-        if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
+        if ($isVerbose) {
             $output->writeln('Reading from directories:');
             $this->io->listing(\array_map(
                 fn (string $path): string => $this->stripProjectPrefix($path),
                 $this->sourceProvider->getDirectories(),
             ));
+
+            $ioTableRows = [];
+            $this->eventDispatcher->addListener(
+                FileWasLoaded::class,
+                function (FileWasLoaded $event) use (&$ioTableRows): void {
+                    $ioTableRows[] = [
+                        $this->stripProjectPrefix($event->file->file()->getRealPath()),
+                        'PARSED',
+                    ];
+                },
+            );
+            $this->eventDispatcher->addListener(
+                FileCannotBeLoaded::class,
+                function (FileCannotBeLoaded $event) use (&$ioTableRows): void {
+                    $ioTableRows[] = [
+                        $this->stripProjectPrefix($event->file->file()->getRealPath()),
+                        sprintf('IGNORED: %s', $event->exception->getMessage()),
+                    ];
+                },
+            );
         }
 
         $translations = $this->sourceProvider->getTranslations(self::DOMAIN);
 
-        if (OutputInterface::VERBOSITY_VERBOSE === $this->io->getVerbosity()) {
+        if ($isVerbose) {
+            $this->io->table(['Realpath', 'Result'], $ioTableRows);
             $output->writeln(sprintf('Found %s translation keys in translation files', \count($translations)));
             $output->writeln('');
+            $output->writeln('Loading Pimcore translations from database');
             $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
         }
 

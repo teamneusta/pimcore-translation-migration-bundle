@@ -2,7 +2,11 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle\Source;
 
+use Neusta\Pimcore\TranslationMigrationBundle\Event\FileCannotBeLoaded;
+use Neusta\Pimcore\TranslationMigrationBundle\Event\FileWasLoaded;
 use Neusta\Pimcore\TranslationMigrationBundle\Model\TranslationCollection;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Translation\Exception\ExceptionInterface;
 use Symfony\Component\Translation\Loader\LoaderInterface;
 
 final class SymfonySourceProvider implements SourceProvider
@@ -15,6 +19,7 @@ final class SymfonySourceProvider implements SourceProvider
      * @param array<string> $enabledLocales
      */
     public function __construct(
+        private EventDispatcherInterface $eventDispatcher,
         private SourceFinder $finder,
         private array $resourceDirectories,
         private array $enabledLocales,
@@ -52,7 +57,12 @@ final class SymfonySourceProvider implements SourceProvider
                     continue;
                 }
 
-                $collection = $collection->withCatalogue($loader->load($file, $file->locale(), $file->domain()));
+                try {
+                    $collection = $collection->withCatalogue($loader->load($file, $file->locale(), $file->domain()));
+                    $this->eventDispatcher->dispatch(new FileWasLoaded($file));
+                } catch (ExceptionInterface $exception) {
+                    $this->eventDispatcher->dispatch(new FileCannotBeLoaded($file, $exception));
+                }
             }
         }
 
