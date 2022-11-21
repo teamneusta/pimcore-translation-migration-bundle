@@ -16,8 +16,12 @@ final class PimcoreTargetRepository implements TargetRepository
     {
         $translationIds = [];
         foreach ((new Translation\Listing())->load() as $databaseTranslation) {
-            if ($databaseTranslation->getCreationDate() !== $databaseTranslation->getModificationDate()) {
-                $translationIds[] = $databaseTranslation->getKey();
+            if ($databaseTranslation->getCreationDate() === $databaseTranslation->getModificationDate()) {
+                continue;
+            }
+
+            if (null !== $key = $databaseTranslation->getKey()) {
+                $translationIds[] = $key;
             }
         }
 
