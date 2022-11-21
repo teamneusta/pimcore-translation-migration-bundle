@@ -27,10 +27,10 @@ return static function (ContainerConfigurator $container) {
         ->alias(TargetRepository::class, PimcoreTargetRepository::class)
 
         ->set(TranslationsMigrateCommand::class, TranslationsMigrateCommand::class)
-        ->args([
-            service(SourceProvider::class),
-            service(TargetRepository::class),
-        ])
-        ->tag('console.command')
+            ->args([
+                service(SourceProvider::class),
+                service(TargetRepository::class),
+            ])
+            ->tag('console.command')
     ;
 };
