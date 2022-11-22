@@ -31,6 +31,7 @@ return static function (ContainerConfigurator $container) {
             ->args([
                 service(SourceProvider::class),
                 service(TargetRepository::class),
+                service('event_dispatcher'),
             ])
             ->tag('console.command')
     ;

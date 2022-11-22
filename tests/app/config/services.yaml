@@ -3,18 +3,6 @@ services:
     autowire: true
     autoconfigure: true
 
-  Neusta\Pimcore\TranslationMigrationBundle\Command\:
-    resource: '../../../src/Command/'
-    tags: [ 'console.command' ]
-
-  Neusta\Pimcore\TranslationMigrationBundle\Source\:
-    resource: '../../../src/Source/'
-    exclude:
-      - '../../../src/Source/SymfonySourceProvider.php'
-
-  Neusta\Pimcore\TranslationMigrationBundle\Target\:
-    resource: '../../../src/Target/'
-
   Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider:
     arguments:
       $resourceDirectories:
