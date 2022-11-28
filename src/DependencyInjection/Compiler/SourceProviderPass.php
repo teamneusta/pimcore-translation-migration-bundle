@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection;
+namespace Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection\Compiler;
 
 use Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

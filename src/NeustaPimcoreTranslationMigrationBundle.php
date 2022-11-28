@@ -2,7 +2,7 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle;
 
-use Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection\SourceProviderPass;
+use Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection\Compiler\SourceProviderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
