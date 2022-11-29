@@ -1,5 +1,5 @@
 {
-  "name": "teamneusta/pimcore-translation-migration",
+  "name": "teamneusta/pimcore-translation-migration-bundle",
   "type": "pimcore-bundle",
   "description": "Migrates Symfony translations to Pimcore",
   "license": "GPL-3.0-or-later",
