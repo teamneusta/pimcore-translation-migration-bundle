@@ -1,6 +1,11 @@
 services:
-  Neusta\Pimcore\TranslationMigrationBundle\Command\TranslationsMigrateCommand:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider:
     arguments:
-      $translationFilePaths:
+      $resourceDirectories:
         - '%kernel.project_dir%/tests/translation-fixtures'
-    tags: [ 'console.command' ]
+      $enabledLocales:
+        - 'en'

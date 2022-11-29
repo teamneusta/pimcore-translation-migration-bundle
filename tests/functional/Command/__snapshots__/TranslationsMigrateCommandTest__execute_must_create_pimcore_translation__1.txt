@@ -1,6 +1,6 @@
 
- // Start migrating YAML translations to Pimcore translations
-Read from directories:
+ // Start migrating translations to Pimcore translations
+Reading from directories:
  * tests/translation-fixtures
  --------------------------------------------- --------
   Realpath                                      Result

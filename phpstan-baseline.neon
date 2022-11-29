@@ -1,16 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Property Neusta\\\\Pimcore\\\\TranslationMigrationBundle\\\\Command\\\\TranslationsMigrateCommand\\:\\:\\$editableLanguages \\(array\\) does not accept array\\|null\\.$#"
-			count: 1
-			path: src/Command/TranslationsMigrateCommand.php
-
-		-
-			message: "#^Property Neusta\\\\Pimcore\\\\TranslationMigrationBundle\\\\Command\\\\TranslationsMigrateCommand\\:\\:\\$editableLanguages type has no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/Command/TranslationsMigrateCommand.php
-
-		-
 			message: "#^Argument of an invalid type array\\|bool\\|float\\|int\\|string\\|UnitEnum\\|null supplied for foreach, only iterables are supported\\.$#"
 			count: 1
 			path: src/DependencyInjection/NeustaPimcoreTranslationMigrationExtension.php

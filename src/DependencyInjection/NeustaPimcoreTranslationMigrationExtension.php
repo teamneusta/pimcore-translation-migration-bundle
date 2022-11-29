@@ -2,37 +2,31 @@
 
 namespace Neusta\Pimcore\TranslationMigrationBundle\DependencyInjection;
 
-use Neusta\Pimcore\TranslationMigrationBundle\Command\TranslationsMigrateCommand;
+use Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 final class NeustaPimcoreTranslationMigrationExtension extends ConfigurableExtension
 {
     public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../../config'));
-
-        $loader->load('services.yaml');
-
-        $directories = $this->getTranslationFileDirectories($container);
+        $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__, 2) . '/config'));
+        $loader->load('services.php');
 
         $container
-            ->findDefinition(TranslationsMigrateCommand::class)
-            ->replaceArgument('$translationFilePaths', $directories);
+            ->findDefinition(SymfonySourceProvider::class)
+            ->replaceArgument(2, $this->getTranslationFileDirectories($container));
     }
 
     private function getTranslationFileDirectories(ContainerBuilder $container): array
     {
-        // Add translation directory of bundles
         $directories = [];
-        $bundlesMetadata = $container->getParameter('kernel.bundles_metadata');
-        foreach ($bundlesMetadata as $bundleMetadata) {
-            if (
-                is_dir($dir = $bundleMetadata['path'] . '/Resources/translations')
-                || is_dir($dir = $bundleMetadata['path'] . '/translations')
-            ) {
+
+        // Add translation directories of bundles
+        foreach ($container->getParameter('kernel.bundles_metadata') as ['path' => $bundleDir]) {
+            if (is_dir($dir = $bundleDir . '/Resources/translations') || is_dir($dir = $bundleDir . '/translations')) {
                 $directories[] = $dir;
             }
         }
