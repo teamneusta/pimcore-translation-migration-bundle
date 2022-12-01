@@ -8,5 +8,4 @@
 /phpunit.xml.dist export-ignore
 /run-tests.sh export-ignore
 /tests export-ignore
-/run-tests.sh export-ignore
 /wait-for-it.sh export-ignore
