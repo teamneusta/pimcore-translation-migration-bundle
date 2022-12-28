@@ -16,9 +16,16 @@ Require via Composer
 composer require teamneusta/pimcore-translation-migration-bundle
 ```
 
-Enable it
+Add the bundle to your application. For example via the `Kernel.php`.
+
 ```shell
-bin/console pimcore:bundle:enable NeustaPimcoreTranslationMigrationBundle
+use Neusta\Pimcore\TranslationMigrationBundle\NeustaPimcoreTranslationMigrationBundle;
+...
+    public function registerBundlesToCollection(BundleCollection $collection)
+    {
+        ...
+        $collection->addBundle(new NeustaPimcoreTranslationMigrationBundle());
+    }
 ```
 
 ## Usage
