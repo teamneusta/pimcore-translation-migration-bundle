@@ -2,7 +2,7 @@
 
 ## Usage Example
 
-Here is an example for a symfony yaml file with translations, located under `$PROJECT_DIR/translations/messages.en.yaml`.
+Here is an example of a symfony YAML file with translations, located in `$PROJECT_DIR/translations/messages.en.yaml`.
 
 ```yaml
 shop:
@@ -17,7 +17,7 @@ customer:
     change: 'Change your profile here'
 ```
 
-On a fresh Pimcore installation, the translations for the domain `messages` is empty.
+In a fresh Pimcore installation, the translations for the domain `messages` are empty.
 
 ![](01-empty-translations.png)
 
@@ -29,4 +29,4 @@ After that, reload the Pimcore translations and see the result.
 
 ![](03-migrated-translations.png)
 
-Executing the command more another time without changing anything, would result in the same output. Only if a Pimcore translation is changed, it will be skipped from migration. The `creationDate` and `modificationDate` timestamps are compared when looking for changes.
+Executing the command another time, without changing anything, would result in the same output. Only if a Pimcore translation is changed, it will be skipped during migration. The `creationDate` and `modificationDate` timestamps are compared when looking for changes.

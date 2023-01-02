@@ -36,7 +36,7 @@ This bundle provides a Symfony command that just executes the migration.
 bin/console neusta:translations:migrate
 ```
 
-For an example usage look at [documentation](docs/index.md).
+For an example of how to use it, look at the [documentation](docs/index.md).
 
 ## Configuration
 
