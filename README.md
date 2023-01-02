@@ -6,7 +6,7 @@
 
 This bundle combines the advantages of Symfony translation files and translations in the Pimcore admin backend.
 
-This bundle reads standard symfony translation files and migrates them to Pimcore translations. Changed Pimcore translations are not overwritten.
+This bundle reads standard symfony translation files and migrates them to Pimcore translations. Changed Pimcore translations are not overwritten (compared `creationDate` and `modificationDate`).
 
 ## Installation
 
@@ -16,9 +16,14 @@ Require via Composer
 composer require teamneusta/pimcore-translation-migration-bundle
 ```
 
-Enable it
-```shell
-bin/console pimcore:bundle:enable NeustaPimcoreTranslationMigrationBundle
+Enable the bundle via the [Symfony Bundle System](https://symfony.com/doc/current/bundles.html).
+
+```php
+// config/bundles.php
+return [
+    ...
+    Neusta\Pimcore\TranslationMigrationBundle\NeustaPimcoreTranslationMigrationBundle::class => ['all' => true],
+];
 ```
 
 ## Usage
@@ -28,6 +33,8 @@ This bundle provides a Symfony command that just executes the migration.
 ```shell
 bin/console neusta:translations:migrate
 ```
+
+For an example of how to use it, look at the [documentation](docs/index.md).
 
 ## Configuration
 
