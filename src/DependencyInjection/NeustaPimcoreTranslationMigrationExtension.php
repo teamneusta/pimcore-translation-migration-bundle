@@ -6,7 +6,6 @@ use Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class NeustaPimcoreTranslationMigrationExtension extends Extension
