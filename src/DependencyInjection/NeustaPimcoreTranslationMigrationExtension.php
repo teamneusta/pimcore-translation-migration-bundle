@@ -6,11 +6,14 @@ use Neusta\Pimcore\TranslationMigrationBundle\Source\SymfonySourceProvider;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class NeustaPimcoreTranslationMigrationExtension extends ConfigurableExtension
+final class NeustaPimcoreTranslationMigrationExtension extends Extension
 {
-    public function loadInternal(array $mergedConfig, ContainerBuilder $container): void
+    /**
+     * @param array<string, mixed> $configs
+     */
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__, 2) . '/config'));
         $loader->load('services.php');
