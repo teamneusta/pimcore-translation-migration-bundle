@@ -10,6 +10,9 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class NeustaPimcoreTranslationMigrationExtension extends Extension
 {
+    /**
+     * @param array<string, mixed> $configs
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(\dirname(__DIR__, 2) . '/config'));

@@ -19,8 +19,3 @@ parameters:
 			message: "#^Method Neusta\\\\Pimcore\\\\TranslationMigrationBundle\\\\DependencyInjection\\\\NeustaPimcoreTranslationMigrationExtension\\:\\:getTranslationFileDirectories\\(\\) return type has no value type specified in iterable type array\\.$#"
 			count: 1
 			path: src/DependencyInjection/NeustaPimcoreTranslationMigrationExtension.php
-
-		-
-			message: "#^Method Neusta\\\\Pimcore\\\\TranslationMigrationBundle\\\\DependencyInjection\\\\NeustaPimcoreTranslationMigrationExtension\\:\\:loadInternal\\(\\) has parameter \\$mergedConfig with no value type specified in iterable type array\\.$#"
-			count: 1
-			path: src/DependencyInjection/NeustaPimcoreTranslationMigrationExtension.php
