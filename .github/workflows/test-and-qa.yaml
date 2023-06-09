@@ -41,13 +41,13 @@ jobs:
     runs-on: ubuntu-latest
     # from https://ldarren.medium.com/number-of-ways-to-setup-database-in-github-actions-2cd48df9faae
     services:
-      db:
-        image: mariadb:10.10.2
+      database:
+        image: mariadb:10.5.13
         env:
-          MYSQL_ROOT_PASSWORD: 'pimcore'
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
           MYSQL_DATABASE: 'pimcore_test'
-          MYSQL_USER: 'pimcore'
           MYSQL_PASSWORD: 'pimcore'
+          MYSQL_USER: 'pimcore'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
         ports:
           - 3306:3306
@@ -71,5 +71,5 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: composer tests
         env:
-          DB_URL: 'mysql://pimcore:pimcore@127.0.0.1:3306/pimcore_test?serverVersion=mariadb-10.10.2'
+          DB_URL: 'mysql://pimcore:pimcore@127.0.0.1:3306/pimcore_test?serverVersion=mariadb-10.5.13'
 
