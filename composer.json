@@ -11,23 +11,29 @@
       "role": "Developer"
     }
   ],
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
+  },
   "require": {
     "php": "^8.0",
     "pimcore/pimcore": "^10.0",
     "symfony/console": "^5.4",
     "symfony/finder": "^5.4",
-    "symfony/framework-bundle": "^5.0|^6.0",
-    "symfony/yaml": "^5.0|^6.0"
+    "symfony/framework-bundle": "^5.0 || ^6.0",
+    "symfony/yaml": "^5.0 || ^6.0"
   },
   "require-dev": {
-    "phpspec/prophecy-phpunit": "^2.0",
-    "phpunit/phpunit": "^9.5",
-    "spatie/phpunit-snapshot-assertions": "^4.2",
-    "symfony/filesystem": "^5.4",
     "friendsofphp/php-cs-fixer": "^3.11",
+    "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^1.8",
     "phpstan/phpstan-phpunit": "^1.1",
     "phpstan/phpstan-symfony": "^1.2",
+    "phpunit/phpunit": "^9.5",
+    "spatie/phpunit-snapshot-assertions": "^4.2",
+    "symfony/filesystem": "^5.4",
     "teamneusta/pimcore-testing-framework": "^1.0"
   },
   "autoload": {
@@ -37,8 +43,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Neusta\\Pimcore\\TranslationMigrationBundle\\Tests\\Functional\\": "tests/functional/",
-      "Neusta\\Pimcore\\TranslationMigrationBundle\\Tests\\Unit\\": "tests/unit/"
+      "Neusta\\Pimcore\\TranslationMigrationBundle\\Tests\\Functional\\": "tests/functional/"
     },
     "classmap": [
       "tests/app/TestKernel.php"
