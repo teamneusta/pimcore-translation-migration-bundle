@@ -1,12 +1,12 @@
 
  // Start migrating translations to Pimcore translations
 Reading from directories:
- * tests/translation-fixtures
- --------------------------------------------- --------
-  Realpath                                      Result
- --------------------------------------------- --------
-  tests/translation-fixtures/messages.en.yaml   PARSED
- --------------------------------------------- --------
+ * tests/app/tests/translation-fixtures
+ --------------------------------------------------------------------- --------
+  Realpath                                                              Result
+ --------------------------------------------------------------------- --------
+  tests/app/tests/translation-fixtures/messages.en.yaml   PARSED
+ --------------------------------------------------------------------- --------
 Found 1 translation keys in translation files
 Loading Pimcore translations from database
 Found 1 Pimcore translation keys in database

@@ -118,6 +118,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
     {
         $displayOutput = $this->commandTester->getDisplay();
         $displayOutput = preg_replace("/\s+\n/", "\n", $displayOutput);
+        $displayOutput = str_replace('/var/www/html/', '', $displayOutput);
         $this->assertMatchesTextSnapshot($displayOutput);
     }
 }

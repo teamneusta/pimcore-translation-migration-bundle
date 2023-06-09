@@ -46,24 +46,13 @@ Feel free to open issues for any bug, feature request, or other ideas.
 
 Please remember to create an issue before creating large pull requests.
 
-### Running tests for development
+### Local Development
+
+For every purpose there is an Docker Compose profile. Running the 'init' profile once is required.
 
 ```shell
-./run-tests.sh
+docker compose --profile init up
+docker compose --profile test up
+docker compose --profile php-cs-fixer up
+docker compose --profile phpstan up
 ```
-
-Only supported on Linux.
-
-### Further development
-
-Pipelines will tell you, when code does not meet our standards. To use the same tools in local development, take the Docker command from above with other scripts from the `composer.json`. For example:
-
-* cs:check
-* phpstan
-
-```shell
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer install --ignore-platform-reqs
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer <composer-script>
-```
-
-Only supported on Linux.

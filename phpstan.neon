@@ -2,6 +2,9 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
+
+    level: 8
+
     paths:
         - src
 
@@ -9,3 +12,11 @@ parameters:
         - vendor/pimcore/pimcore/stubs/dynamic-constants.php
 
     checkGenericClassInNonGenericObjectType: false
+
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    # If you're using PHP config files for Symfony 5.3+, you also need this for auto-loading of `Symfony\Config`:
+    #scanDirectories:
+    #    - var/cache/dev/Symfony/Config
+

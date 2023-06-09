@@ -12,11 +12,12 @@ return (new PhpCsFixer\Config)
             __DIR__ . '/src',
             __DIR__ . '/tests',
         ])
-        ->notPath('DependencyInjection/Configuration.php')
+        ->notPath(['DependencyInjection/Configuration.php', 'app/var'])
     )
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,
+        '@Symfony:risky' => true,
 
         // declare strict types must be on first line after opening tag
         'blank_line_after_opening_tag' => false, // overwrite @Symfony
@@ -26,6 +27,9 @@ return (new PhpCsFixer\Config)
         // we want spaces
         'concat_space' => ['spacing' => 'one'],
 
-        // allow both styles
-        'php_unit_method_casing' => false,
+        // allow throw's in multiple lines, so message can be a long string
+        'single_line_throw' => false, // overwrite @Symfony
+
+        // we want to leave the choice to the developer
+        'php_unit_test_annotation' => false,
     ]);
