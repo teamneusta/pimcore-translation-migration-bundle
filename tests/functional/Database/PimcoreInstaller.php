@@ -95,6 +95,6 @@ class PimcoreInstaller extends Installer
 
         $pattern = sprintf('%s/*{%s}', $this->dumpLocation, implode(',', self::DUMP_FILE_EXTENSIONS));
 
-        return glob($pattern, GLOB_BRACE);
+        return glob($pattern, \GLOB_BRACE);
     }
 }

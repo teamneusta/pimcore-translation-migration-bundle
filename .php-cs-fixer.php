@@ -32,4 +32,5 @@ return (new PhpCsFixer\Config)
 
         // we want to leave the choice to the developer
         'php_unit_test_annotation' => false,
+        'php_unit_method_casing' => false,
     ]);

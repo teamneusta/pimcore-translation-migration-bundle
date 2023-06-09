@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class TranslationsMigrateCommandTest extends KernelTestCase
 {
-    use ResetDatabase;
     use MatchesSnapshots;
+    use ResetDatabase;
 
     private const COMMAND_NAME = 'neusta:translations:migrate';
 
@@ -75,7 +75,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
             ['en' => 'Some random initial value'],
         );
 
-        \sleep(1);
+        sleep(1);
         // update modification date
         $translation->setTranslations(['en' => 'Modified translation value']);
         $translation->save();
