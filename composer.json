@@ -32,7 +32,6 @@
     "phpstan/phpstan-phpunit": "^1.1",
     "phpstan/phpstan-symfony": "^1.2",
     "phpunit/phpunit": "^9.5",
-    "spatie/phpunit-snapshot-assertions": "^4.2",
     "symfony/filesystem": "^5.4",
     "teamneusta/pimcore-testing-framework": "^1.0"
   },

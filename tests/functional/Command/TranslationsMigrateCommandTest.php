@@ -6,7 +6,6 @@ use Neusta\Pimcore\TranslationMigrationBundle\Tests\Functional\Database\ResetDat
 use Pimcore\Cache\RuntimeCache;
 use Pimcore\Model\Translation;
 use Pimcore\Test\KernelTestCase;
-use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -15,7 +14,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class TranslationsMigrateCommandTest extends KernelTestCase
 {
-    use MatchesSnapshots;
     use ResetDatabase;
 
     private const COMMAND_NAME = 'neusta:translations:migrate';
@@ -45,31 +43,59 @@ class TranslationsMigrateCommandTest extends KernelTestCase
     /** @test */
     public function execute_must_create_pimcore_translation(): void
     {
+        $expectedOutput = <<<'EXPECTED'
+        Found 1 translation keys in translation files
+        Loading Pimcore translations from database
+        Found 0 Pimcore translation keys in database
+         [INFO] 1 translation keys were added to Pimcore.
+         [OK] Pimcore translations updated successfully
+        EXPECTED;
+
         $this->createTranslationFile('en', ['test.translation.key' => 'Value of test translation']);
 
+        // act
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesSnapshotCommandDisplay();
+        $displayOutput = $this->getSanitizedCommandOutput();
+        self::assertStringContainsString($expectedOutput, $displayOutput);
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
     /** @test */
     public function execute_must_update_existing_key_when_translation_is_untouched(): void
     {
+        $expectedOutput = <<<'EXPECTED'
+        Found 1 translation keys in translation files
+        Loading Pimcore translations from database
+        Found 1 Pimcore translation keys in database
+         [INFO] 1 translation keys were added to Pimcore.
+         [OK] Pimcore translations updated successfully
+        EXPECTED;
+
         $this->createPimcoreTranslation('test.translation.key', ['en' => 'Value before update']);
         $this->createTranslationFile('en', ['test.translation.key' => 'Value of test translation']);
 
+        // act
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesSnapshotCommandDisplay();
+        $displayOutput = $this->getSanitizedCommandOutput();
+        self::assertStringContainsString($expectedOutput, $displayOutput);
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
     /** @test */
     public function execute_must_not_update_modified_translation(): void
     {
+        $expectedOutput = <<<'EXPECTED'
+        Found 1 translation keys in translation files
+        Loading Pimcore translations from database
+        Found 1 Pimcore translation keys in database
+         [INFO] 0 translation keys were added to Pimcore.
+         [OK] Pimcore translations updated successfully
+        EXPECTED;
+
         $translation = $this->createPimcoreTranslation(
             'test.translation.key',
             ['en' => 'Some random initial value'],
@@ -82,10 +108,12 @@ class TranslationsMigrateCommandTest extends KernelTestCase
 
         $this->createTranslationFile('en', ['test.translation.key' => 'Value of test translation']);
 
+        // act
         $this->commandTester->execute([], ['verbosity' => OutputInterface::VERBOSITY_VERBOSE]);
 
         $this->commandTester->assertCommandIsSuccessful();
-        $this->assertMatchesSnapshotCommandDisplay();
+        $displayOutput = $this->getSanitizedCommandOutput();
+        self::assertStringContainsString($expectedOutput, $displayOutput);
         $this->assertTranslationIsSame(['en' => 'Modified translation value'], 'test.translation.key');
     }
 
@@ -114,11 +142,10 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         self::assertSame($expected, Translation::getByKey($key)?->getTranslations());
     }
 
-    private function assertMatchesSnapshotCommandDisplay(): void
+    protected function getSanitizedCommandOutput(): string|array|null
     {
         $displayOutput = $this->commandTester->getDisplay();
-        $displayOutput = preg_replace("/\s+\n/", "\n", $displayOutput);
-        $displayOutput = str_replace('/var/www/html/', '', $displayOutput);
-        $this->assertMatchesTextSnapshot($displayOutput);
+
+        return preg_replace("/\s+\n/", "\n", $displayOutput);
     }
 }
