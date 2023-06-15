@@ -33,7 +33,7 @@
     "phpstan/phpstan-symfony": "^1.2",
     "phpunit/phpunit": "^9.5",
     "symfony/filesystem": "^5.4",
-    "teamneusta/pimcore-testing-framework": "^1.0"
+    "teamneusta/pimcore-testing-framework": "dev-feature/add-kernel-test-setup"
   },
   "autoload": {
     "psr-4": {
