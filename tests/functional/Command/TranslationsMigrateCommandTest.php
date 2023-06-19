@@ -142,7 +142,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         self::assertSame($expected, Translation::getByKey($key)?->getTranslations());
     }
 
-    protected function getSanitizedCommandOutput(): string|array|null
+    protected function getSanitizedCommandOutput(): string|null
     {
         $displayOutput = $this->commandTester->getDisplay();
 
