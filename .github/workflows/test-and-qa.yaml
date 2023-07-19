@@ -44,8 +44,8 @@ jobs:
       db:
         image: mariadb:10.10.2
         env:
-          MYSQL_ROOT_PASSWORD: 'pimcore'
-          MYSQL_DATABASE: 'pimcore_test'
+          MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+          MYSQL_DATABASE: 'pimcore'
           MYSQL_USER: 'pimcore'
           MYSQL_PASSWORD: 'pimcore'
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -71,5 +71,5 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: composer tests
         env:
-          MYSQL_SERVER_VERSION: mariadb-10.11.4
+          MYSQL_SERVER_VERSION: 'mariadb-10.11.4'
 
