@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class TranslationsMigrateCommandTest extends KernelTestCase
 {
-    use ResetDatabase;
     use MatchesSnapshots;
+    use ResetDatabase;
 
     private const COMMAND_NAME = 'neusta:translations:migrate';
 
