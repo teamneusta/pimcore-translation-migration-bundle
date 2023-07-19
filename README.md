@@ -10,21 +10,19 @@ This bundle reads standard symfony translation files and migrates them to Pimcor
 
 ## Installation
 
-Require via Composer
+1. **Require the bundle**
 
-```shell
-composer require teamneusta/pimcore-translation-migration-bundle
-```
+   ```shell script
+   composer require teamneusta/pimcore-translation-migration-bundle
+   ```
 
-Enable the bundle via the [Symfony Bundle System](https://symfony.com/doc/current/bundles.html).
+2. **Enable the bundle**
 
-```php
-// config/bundles.php
-return [
-    ...
-    Neusta\Pimcore\TranslationMigrationBundle\NeustaPimcoreTranslationMigrationBundle::class => ['all' => true],
-];
-```
+   Add the Elastic Bundle and the Translation Migration Bundle to your `config/bundles.php`:
+
+   ```php
+   Neusta\Pimcore\TranslationMigrationBundle\NeustaPimcoreTranslationMigrationBundle::class => ['all' => true],
+   ```
 
 ## Usage
 
@@ -46,24 +44,23 @@ Feel free to open issues for any bug, feature request, or other ideas.
 
 Please remember to create an issue before creating large pull requests.
 
-### Running tests for development
+### Local Development
+
+To develop on local machine, the vendor dependencies are required.
 
 ```shell
-./run-tests.sh
+bin/composer install
 ```
 
-Only supported on Linux.
-
-### Further development
-
-Pipelines will tell you, when code does not meet our standards. To use the same tools in local development, take the Docker command from above with other scripts from the `composer.json`. For example:
-
-* cs:check
-* phpstan
+We use composer scripts for our main quality tools. They can be executed via the `bin/composer` file as well.
 
 ```shell
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer install --ignore-platform-reqs
-docker run -it --rm -v $(pwd):/app -w /app pimcore/pimcore:PHP8.1-cli composer <composer-script>
+bin/composer cs:fix
+bin/composer phpstan
 ```
 
-Only supported on Linux.
+For the tests there is a different script, that includes a database setup.
+
+```shell
+bin/run-tests
+```

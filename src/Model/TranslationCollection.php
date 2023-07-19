@@ -35,8 +35,8 @@ final class TranslationCollection implements \IteratorAggregate, \Countable
 
         $clone->translations = array_filter(
             $this->translations,
-            static fn (string $id): bool => !in_array($id, $ids, true),
-            ARRAY_FILTER_USE_KEY,
+            static fn (string $id): bool => !\in_array($id, $ids, true),
+            \ARRAY_FILTER_USE_KEY,
         );
 
         return $clone;
@@ -49,6 +49,6 @@ final class TranslationCollection implements \IteratorAggregate, \Countable
 
     public function count(): int
     {
-        return count($this->translations);
+        return \count($this->translations);
     }
 }
