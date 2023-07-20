@@ -18,7 +18,7 @@ This bundle reads standard symfony translation files and migrates them to Pimcor
 
 2. **Enable the bundle**
 
-   Add the Elastic Bundle and the Translation Migration Bundle to your `config/bundles.php`:
+   Add the Translation Migration Bundle to your `config/bundles.php`:
 
    ```php
    Neusta\Pimcore\TranslationMigrationBundle\NeustaPimcoreTranslationMigrationBundle::class => ['all' => true],
