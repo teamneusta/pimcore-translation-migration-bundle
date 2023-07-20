@@ -71,5 +71,6 @@ jobs:
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         run: composer tests
         env:
+          MYSQL_HOST: '127.0.0.1'
           MYSQL_SERVER_VERSION: 'mariadb-10.11.4'
 
