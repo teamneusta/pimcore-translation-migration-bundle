@@ -49,7 +49,7 @@ final class SymfonySourceProvider implements SourceProvider
                     continue;
                 }
 
-                if ($this->enabledLocales && !in_array($file->locale(), $this->enabledLocales, true)) {
+                if ($this->enabledLocales && !\in_array($file->locale(), $this->enabledLocales, true)) {
                     continue;
                 }
 

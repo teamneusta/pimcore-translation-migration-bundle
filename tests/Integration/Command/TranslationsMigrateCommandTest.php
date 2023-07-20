@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace Neusta\Pimcore\TranslationMigrationBundle\Tests\Functional\Command;
+namespace Neusta\Pimcore\TranslationMigrationBundle\Tests\Integration\Command;
 
-use Neusta\Pimcore\TranslationMigrationBundle\Tests\Functional\Database\ResetDatabase;
+use Neusta\Pimcore\TestingFramework\Database\ResetDatabase;
 use Pimcore\Cache\RuntimeCache;
 use Pimcore\Model\Translation;
 use Pimcore\Test\KernelTestCase;
@@ -15,8 +15,8 @@ use Symfony\Component\Yaml\Yaml;
 
 class TranslationsMigrateCommandTest extends KernelTestCase
 {
-    use ResetDatabase;
     use MatchesSnapshots;
+    use ResetDatabase;
 
     private const COMMAND_NAME = 'neusta:translations:migrate';
 
@@ -75,7 +75,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
             ['en' => 'Some random initial value'],
         );
 
-        \sleep(1);
+        sleep(1);
         // update modification date
         $translation->setTranslations(['en' => 'Modified translation value']);
         $translation->save();

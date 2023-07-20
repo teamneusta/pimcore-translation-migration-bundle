@@ -54,7 +54,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
         if ($isVerbose) {
             $output->writeln('Reading from directories:');
-            $this->io->listing(\array_map(
+            $this->io->listing(array_map(
                 fn (string $path): string => $this->stripProjectPrefix($path),
                 $this->sourceProvider->getDirectories(),
             ));
@@ -102,7 +102,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
     private function stripProjectPrefix(string $string): string
     {
         return str_starts_with($string, self::PROJECT_ROOT)
-            ? substr($string, strlen(self::PROJECT_ROOT))
+            ? substr($string, \strlen(self::PROJECT_ROOT))
             : $string;
     }
 }
