@@ -41,7 +41,7 @@ final class NeustaPimcoreTranslationMigrationExtension extends Extension
 
         // Add translation directory of project
         $projectDir = $container->getParameter('kernel.project_dir');
-        if (is_string($projectDir)) {
+        if (\is_string($projectDir)) {
             if (is_dir($dir = $projectDir . '/Resources/translations') || is_dir($dir = $projectDir . '/translations')) {
                 $directories[] = $dir;
             }
