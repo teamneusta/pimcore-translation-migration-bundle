@@ -31,7 +31,7 @@ final class NeustaPimcoreTranslationMigrationExtension extends Extension
         $directories = [];
 
         // Add translation directories of bundles
-        /** @var list<string> $kernelBundlesMetadata */
+        /** @var array<string, array{path: string, namespace: string}> $kernelBundlesMetadata */
         $kernelBundlesMetadata = $container->getParameter('kernel.bundles_metadata');
         foreach ($kernelBundlesMetadata as ['path' => $bundleDir]) {
             if (is_dir($dir = $bundleDir . '/Resources/translations') || is_dir($dir = $bundleDir . '/translations')) {
