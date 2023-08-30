@@ -23,12 +23,17 @@ final class NeustaPimcoreTranslationMigrationExtension extends Extension
             ->replaceArgument(2, $this->getTranslationFileDirectories($container));
     }
 
+    /**
+     * @return list<string>
+     */
     private function getTranslationFileDirectories(ContainerBuilder $container): array
     {
         $directories = [];
 
         // Add translation directories of bundles
-        foreach ($container->getParameter('kernel.bundles_metadata') as ['path' => $bundleDir]) {
+        /** @var list<string> $kernelBundlesMetadata */
+        $kernelBundlesMetadata = $container->getParameter('kernel.bundles_metadata');
+        foreach ($kernelBundlesMetadata as ['path' => $bundleDir]) {
             if (is_dir($dir = $bundleDir . '/Resources/translations') || is_dir($dir = $bundleDir . '/translations')) {
                 $directories[] = $dir;
             }
@@ -36,8 +41,10 @@ final class NeustaPimcoreTranslationMigrationExtension extends Extension
 
         // Add translation directory of project
         $projectDir = $container->getParameter('kernel.project_dir');
-        if (is_dir($dir = $projectDir . '/Resources/translations') || is_dir($dir = $projectDir . '/translations')) {
-            $directories[] = $dir;
+        if (is_string($projectDir)) {
+            if (is_dir($dir = $projectDir . '/Resources/translations') || is_dir($dir = $projectDir . '/translations')) {
+                $directories[] = $dir;
+            }
         }
 
         return $directories;
