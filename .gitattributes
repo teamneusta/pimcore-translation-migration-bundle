@@ -1,6 +1,8 @@
 /.gitattributes export-ignore
 /.github/ export-ignore
 /.gitignore export-ignore
+/.gitlab-ci.yml export-ignore
+/.gitlab-ci/ export-ignore
 /.php-cs-fixer.php export-ignore
 /bin/ export-ignore
 /compose.yaml export-ignore
