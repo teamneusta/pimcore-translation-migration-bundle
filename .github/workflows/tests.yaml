@@ -37,18 +37,15 @@ jobs:
             dependencies: "lowest"
           # Pimcore 10.6.*
           - php-version: "8.1"
-            dependencies: "highest"
             composer-options: "--with pimcore/pimcore=^10.6"
           # Pimcore 11.*
           - php-version: "8.1"
-            dependencies: "highest"
           # Pimcore 11.0
           - php-version: "8.2"
             dependencies: "lowest"
             composer-options: "--with pimcore/pimcore=^11.0"
           # Pimcore 11.*
           - php-version: "8.2"
-            dependencies: "highest"
 
     steps:
       - name: Git Checkout
