@@ -32,13 +32,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Pimcore 10.5.1
           - php-version: "8.1"
             dependencies: "lowest"
+          # Pimcore 10.6.*
           - php-version: "8.1"
             dependencies: "highest"
+            composer-options: "--with pimcore/pimcore=^10.6"
+          # Pimcore 11.*
+          - php-version: "8.1"
+            dependencies: "highest"
+          # Pimcore 11.0
           - php-version: "8.2"
             dependencies: "lowest"
             composer-options: "--with pimcore/pimcore=^11.0"
+          # Pimcore 11.*
           - php-version: "8.2"
             dependencies: "highest"
 
@@ -59,7 +67,7 @@ jobs:
 
       - name: Add Pimcore Admin UI
         run: composer require --dev pimcore/admin-ui-classic-bundle --no-interaction
-        if: matrix.dependencies == 'highest' && matrix.php-version == '8.2'
+        if: matrix.dependencies == 'highest' || matrix.php-version == '8.2'
 
       - name: Execute tests
         run: composer tests
