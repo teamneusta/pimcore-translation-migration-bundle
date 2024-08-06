@@ -74,7 +74,7 @@ final class TranslationsMigrateCommand extends AbstractCommand
                 function (FileCannotBeLoaded $event) use (&$ioTableRows): void {
                     $ioTableRows[] = [
                         $this->stripProjectPrefix($event->file->file()->getRealPath()),
-                        sprintf('IGNORED: %s', $event->exception->getMessage()),
+                        \sprintf('IGNORED: %s', $event->exception->getMessage()),
                     ];
                 },
             );
@@ -84,16 +84,16 @@ final class TranslationsMigrateCommand extends AbstractCommand
 
         if ($isVerbose) {
             $this->io->table(['Realpath', 'Result'], $ioTableRows);
-            $output->writeln(sprintf('Found %s translation keys in translation files', \count($translations)));
+            $output->writeln(\sprintf('Found %s translation keys in translation files', \count($translations)));
             $output->writeln('');
             $output->writeln('Loading Pimcore translations from database');
-            $output->writeln(sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
+            $output->writeln(\sprintf('Found %s Pimcore translation keys in database', $this->targetRepository->count()));
         }
 
         $translationsToUpdate = $translations->withoutIds(...$this->targetRepository->getModifiedIds());
         $this->targetRepository->save($translationsToUpdate);
 
-        $this->io->info(sprintf('%s translation keys were added to Pimcore.', \count($translationsToUpdate)));
+        $this->io->info(\sprintf('%s translation keys were added to Pimcore.', \count($translationsToUpdate)));
         $this->io->success('Pimcore translations updated successfully');
 
         return Command::SUCCESS;
