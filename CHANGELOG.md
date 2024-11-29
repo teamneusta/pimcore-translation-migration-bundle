@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.3.0
+
+### Changes:
+
+- Allow PHP 8.3
+
 ## 1.2.0
 
 ### Features:
