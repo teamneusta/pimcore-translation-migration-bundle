@@ -14,7 +14,7 @@ final class SymfonySourceFinder implements SourceFinder
         $this->finder = Finder::create()
             ->followLinks()
             ->files()
-            ->filter(function (\SplFileInfo $file) {
+            ->filter(static function (\SplFileInfo $file) {
                 return 2 <= substr_count($file->getBasename(), '.') && preg_match('/\.\w+$/', $file->getBasename());
             })
             ->in($directory)
