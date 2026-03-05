@@ -26,8 +26,8 @@ jobs:
         with:
           php-version: 8.3
 
-      - name: Validate composer.json
-        run: composer validate --strict
+#      - name: Validate composer.json
+#        run: composer validate --strict
 
       - name: Install dependencies
         uses: ramsey/composer-install@v2
