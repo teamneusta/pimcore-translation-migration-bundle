@@ -67,3 +67,6 @@ jobs:
         env:
           MYSQL_HOST: '127.0.0.1'
           MYSQL_SERVER_VERSION: 'mariadb-10.11.4'
+          PIMCORE_ENCRYPTION_SECRET: ${{ secrets.PIMCORE_ENCRYPTION_SECRET }}
+          PIMCORE_INSTANCE_IDENTIFIER: ${{ secrets.PIMCORE_INSTANCE_IDENTIFIER }}
+          PIMCORE_PRODUCT_KEY: ${{ secrets.PIMCORE_PRODUCT_KEY }}

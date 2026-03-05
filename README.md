@@ -46,7 +46,14 @@ Please remember to create an issue before creating large pull requests.
 
 ### Local Development
 
-To develop on local machine, the vendor dependencies are required.
+To develop on local machine, instance identification for Pimcore 12 is needed,
+
+```shell
+cp -n compose.override.yaml.dist compose.override.yaml
+# After copying: Replace all `replace_with_secret` values in the compose.override.yaml.
+```
+
+and the vendor dependencies are required.
 
 ```shell
 bin/composer install
