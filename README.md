@@ -46,14 +46,17 @@ Please remember to create an issue before creating large pull requests.
 
 ### Local Development
 
-To develop on local machine, instance identification for Pimcore 12 is needed,
+To develop on your local machine, instance identification for Pimcore 12 is needed.
+
+Copy the `compose.override.yaml.dist` file to `compose.override.yaml`:
 
 ```shell
 cp -n compose.override.yaml.dist compose.override.yaml
-# After copying: Replace all `replace_with_secret` values in the compose.override.yaml.
 ```
 
-and the vendor dependencies are required.
+And replace all `replace_with_secret` values with your data.
+
+Then install the dependencies:
 
 ```shell
 bin/composer install
@@ -66,7 +69,7 @@ bin/composer cs:fix
 bin/composer phpstan
 ```
 
-For the tests there is a different script, that includes a database setup.
+For the tests there is a different script that includes a database setup.
 
 ```shell
 bin/run-tests

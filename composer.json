@@ -9,6 +9,10 @@
       "email": "info@team-neusta.de",
       "homepage": "https://www.team-neusta.de/",
       "role": "Developer"
+    },
+    {
+      "name": "Luka Dschaak",
+      "email": "l.dschaak@neusta.de"
     }
   ],
   "config": {
@@ -22,8 +26,8 @@
     }
   },
   "require": {
-    "php": "~8.3.0 || ~8.4.0",
-    "pimcore/pimcore": "12.0 as 11.5.14.1",
+    "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
+    "pimcore/pimcore": "^11.0 || ^12.0",
     "symfony/console": "^5.4 || ^6.0",
     "symfony/finder": "^5.4 || ^6.0",
     "symfony/framework-bundle": "^5.0 || ^6.0",
@@ -37,10 +41,10 @@
     "phpstan/phpstan": "^1.9",
     "phpstan/phpstan-symfony": "^1.2",
     "phpunit/phpunit": "^9.5",
-    "pimcore/admin-ui-classic-bundle": "^2.0",
+    "pimcore/admin-ui-classic-bundle": "^1.0 || ^2.0",
     "spatie/phpunit-snapshot-assertions": "^4.2",
     "symfony/filesystem": "^5.4 || ^6.0",
-    "teamneusta/pimcore-testing-framework": "^0.12"
+    "teamneusta/pimcore-testing-framework": "^0.13"
   },
   "conflict": {
     "presta/sitemap-bundle": "<3.1",
