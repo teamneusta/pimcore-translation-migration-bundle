@@ -40,15 +40,15 @@ jobs:
         include:
           # Pimcore 11
           - php-version: "8.1"
-            dependencies: "lowest" # Pimcore 11.0.0
+            dependencies: "lowest" # Pimcore 11.5.0
           - php-version: "8.1"
             dependencies: "highest" # Pimcore 11.*
           - php-version: "8.2"
-            dependencies: "lowest" # Pimcore 11.0.0
+            dependencies: "lowest" # Pimcore 11.5.0
           - php-version: "8.2"
             dependencies: "highest" # Pimcore 11.*
           - php-version: "8.3"
-            dependencies: "lowest" # Pimcore 11.2.0
+            dependencies: "lowest" # Pimcore 11.5.0
           - php-version: "8.3"
             dependencies: "highest" # Pimcore 11.*
             composer-options: "--with=pimcore/pimcore:^11.5"
