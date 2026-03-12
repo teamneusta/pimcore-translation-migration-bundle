@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+- update: add Pimcore 12 support and drop support for Pimcore <11.5
+- switched to MIT license
+
 ## 1.3.0
 
 ### Changes:
