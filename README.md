@@ -1,10 +1,10 @@
 # Pimcore Translation Migration Bundle
 
-![CI](https://github.com/teamneusta/pimcore-translation-migration-bundle/actions/workflows/test-and-qa.yaml/badge.svg)
+![CI-QA](https://github.com/teamneusta/pimcore-translation-migration-bundle/actions/workflows/qa.yaml/badge.svg)
+![CI-Tests](https://github.com/teamneusta/pimcore-translation-migration-bundle/actions/workflows/tests.yaml/badge.svg)
+![Software License](https://img.shields.io/badge/license-MIT-informational.svg)
 
-![Software License](https://img.shields.io/badge/license-GPLv3-informational.svg)
-
-This bundle combines the advantages of Symfony translation files and translations in the Pimcore admin backend.
+This bundle combines the advantages of Symfony translation files and translations in the Pimcore Admin Backend.
 
 This bundle reads standard symfony translation files and migrates them to Pimcore translations. Changed Pimcore translations are not overwritten (compared `creationDate` and `modificationDate`).
 
