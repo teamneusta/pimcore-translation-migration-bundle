@@ -3,6 +3,7 @@
 namespace Neusta\Pimcore\TranslationMigrationBundle\Tests\Integration\Command;
 
 use Neusta\Pimcore\TestingFramework\Database\ResetDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Pimcore\Cache\RuntimeCache;
 use Pimcore\Model\Translation;
 use Pimcore\Test\KernelTestCase;
@@ -42,7 +43,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         (new Filesystem())->remove($this->translationFixtureDirectory);
     }
 
-    /** @test */
+    #[Test]
     public function execute_must_create_pimcore_translation(): void
     {
         $this->createTranslationFile('en', ['test.translation.key' => 'Value of test translation']);
@@ -54,7 +55,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
-    /** @test */
+    #[Test]
     public function execute_must_update_existing_key_when_translation_is_untouched(): void
     {
         $this->createPimcoreTranslation('test.translation.key', ['en' => 'Value before update']);
@@ -67,7 +68,7 @@ class TranslationsMigrateCommandTest extends KernelTestCase
         $this->assertTranslationIsSame(['en' => 'Value of test translation'], 'test.translation.key');
     }
 
-    /** @test */
+    #[Test]
     public function execute_must_not_update_modified_translation(): void
     {
         $translation = $this->createPimcoreTranslation(

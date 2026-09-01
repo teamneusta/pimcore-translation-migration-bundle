@@ -26,25 +26,22 @@
     }
   },
   "require": {
-    "php": "~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0",
-    "pimcore/pimcore": "^11.5 || ^12.0",
-    "symfony/console": "^5.4 || ^6.0",
-    "symfony/finder": "^5.4 || ^6.0",
-    "symfony/framework-bundle": "^5.0 || ^6.0",
-    "symfony/yaml": "^5.0 || ^6.0"
+    "php": "~8.2.0 || ~8.3.0 || ~8.4.0|| ~8.5.0",
+    "pimcore/pimcore": "^11.5 || ^12.0 || ^2026.1",
+    "symfony/console": "^5.4 || ^6.4 || ^7.4",
+    "symfony/finder": "^5.4 || ^6.4 || ^7.4",
+    "symfony/framework-bundle": "^5.0 || ^6.4 || ^7.4",
+    "symfony/yaml": "^5.0 || ^6.4 || ^7.4"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.60",
-    "phpspec/prophecy": "^1.11",
-    "phpspec/prophecy-phpunit": "^2.0",
     "phpstan/extension-installer": "^1.1",
-    "phpstan/phpstan": "^1.9",
-    "phpstan/phpstan-symfony": "^1.2",
-    "phpunit/phpunit": "^9.5",
-    "pimcore/admin-ui-classic-bundle": "^1.0 || ^2.0",
-    "spatie/phpunit-snapshot-assertions": "^4.2",
-    "symfony/filesystem": "^5.4 || ^6.0",
-    "teamneusta/pimcore-testing-framework": "^0.13"
+    "phpstan/phpstan": "^2.0",
+    "phpstan/phpstan-symfony": "^2.0",
+    "phpunit/phpunit": "^11.0",
+    "spatie/phpunit-snapshot-assertions": "^5.0",
+    "symfony/filesystem": "^5.4 || ^6.4 || ^7.4",
+    "teamneusta/pimcore-testing-framework": "^0.15"
   },
   "conflict": {
     "presta/sitemap-bundle": "<3.1",
