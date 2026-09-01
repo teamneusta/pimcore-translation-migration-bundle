@@ -2,7 +2,7 @@
 
 ## 3.0.0
 
-- update: add Pimcore 2026 support and drop support for PHP 8.1
+- update: add Pimcore 2026 and PHP 8.5 support and drop support for PHP 8.1
 
 ## 2.0.0
 
