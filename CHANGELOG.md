@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+
+- update: add Pimcore 2026 support and drop support for PHP 8.1
+
 ## 2.0.0
 
 - update: add Pimcore 12 support and drop support for Pimcore <11.5

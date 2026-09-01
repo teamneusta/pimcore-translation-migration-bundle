@@ -39,12 +39,6 @@ jobs:
       matrix:
         include:
           # Pimcore 11
-          - php-version: "8.1"
-            dependencies: "lowest" # Pimcore 11.5.0
-            admin-ui: true
-          - php-version: "8.1"
-            dependencies: "highest" # Pimcore 11.*
-            admin-ui: true
           - php-version: "8.2"
             dependencies: "lowest" # Pimcore 11.5.0
             admin-ui: true
